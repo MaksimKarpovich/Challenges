@@ -21,7 +21,7 @@ struct treeNode
     VALUE_TYPE value;
 };
 
-struct treeNode *bstFind(struct treeNode node, KEY_TYPE key);
-BinaryTreeStatus bstInsert(struct treeNode node, KEY_TYPE key, VALUE_TYPE value);
-BinaryTreeStatus bstRemove(struct treeNode node, KEY_TYPE key);
-BinaryTreeStatus showTree(struct treeNode node, uint8_t num);
+struct treeNode *bstFind(struct treeNode *node, KEY_TYPE key);
+BinaryTreeStatus bstInsert(struct treeNode *node, KEY_TYPE key, VALUE_TYPE value);
+BinaryTreeStatus bstRemove(struct treeNode *node, KEY_TYPE key);
+BinaryTreeStatus showTree(struct treeNode *node, uint8_t num);
