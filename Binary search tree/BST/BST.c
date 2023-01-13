@@ -2,6 +2,17 @@
 
 #define MAX_DIGITS 3
 
+#define UP(num) for(uint32_t dd = 0; dd < num; dd++) printf("\033[A")
+#define DOWN(num) for(uint32_t dd = 0; dd < num; dd++) printf("\033[B")
+#define RIGHT(num) for(uint32_t dd = 0; dd < num; dd++) printf("\033[C")
+#define LEFT(num) for(uint32_t dd = 0; dd < num; dd++) printf("\033[D")
+#define HOME() printf("\033[H")
+#define END() printf("\033[F")
+#define PGUP() printf("\033[I")
+#define PGDN() printf("\033[G")
+#define SPACES(num) for(uint32_t dd = 0; dd < num; dd++) printf(" ")
+#define LINES(num) for(uint32_t dd = 0; dd < num; dd++) printf("_")
+
 struct treeNode *bstFind(struct treeNode *node, KEY_TYPE key)
 {
 
@@ -75,6 +86,14 @@ static uint32_t numSpaces(uint32_t line)
 
 }
 
+static uint32_t numRightSpaces(uint32_t line)
+{
+    if(line == 0)
+        return 5;
+    uint32_t res =  (2 << (line-1)) * MAX_DIGITS - numLines(line - 1) + 2 * line + 1;
+    return res;
+}
+
 static uint32_t numLines(uint32_t line)
 {
     uint32_t spaces = numSpaces(line);
@@ -85,7 +104,8 @@ static uint32_t numLines(uint32_t line)
     return res;
 }
 
-BinaryTreeStatus showTree(struct treeNode *node, uint8_t num)
+
+BinaryTreeStatus showTree(struct treeNode *node, uint8_t num) // Now good work only with num = [0;4]
 {
     if(node->key == (KEY_TYPE)NULL)
     {
@@ -99,36 +119,55 @@ BinaryTreeStatus showTree(struct treeNode *node, uint8_t num)
         return BINARY_TREE_ERROR;
     }
 
+    uint16_t numRightSpace = 0;
+
     for(int k = num; k > 0; k--)
     {
-        for(uint8_t i = 0; i < numSpaces(k); i++)
-            printf(" ");
 
-        for(uint8_t i = 0; i < numLines(k); i++)
-            printf("_");
+        SPACES(numSpaces(k));
+
+        LINES(numLines(k));
 
         for(int i = 0; i < MAX_DIGITS; i++)
             printf("0");
 
-        for(int i = 0; i < CountNumbers(node->key); i++)
-            printf("\b");
+        LINES(numLines(k));
 
-        printf("%d", node->key);
+        for(uint32_t u = 0; u < numRightSpace; u++)
+        {
+            SPACES(numRightSpaces(k));
 
-        for(uint8_t i = 0; i < numLines(k); i++)
-            printf("_");
+            LINES(numLines(k));
+
+            for(int i = 0; i < MAX_DIGITS; i++)
+                printf("0");
+
+            LINES(numLines(k));
+
+        }
 
         printf("\r\n");
 
-        for(uint8_t i = 0; i < numSpaces(k) - 1; i++)
-            printf(" ");
+        if(numRightSpace == 0)
+            numRightSpace = 1;
+        else
+            numRightSpace = (numRightSpace << 1) + 1;
 
-        printf("/");
 
-        for(uint8_t i = 0; i < (numLines(k) * 2) + MAX_DIGITS; i++)
-            printf(" ");
+        SPACES(numSpaces(k) - 1);
 
-        printf("\\\r\n");
+        if(k > 1)
+        {
+            for(uint16_t i = 0; i < (numRightSpace >> 1) + 1; i++) {
+                printf("/");
+
+                SPACES((numLines(k) * 2) + MAX_DIGITS);
+
+                printf("\\");
+                SPACES(numRightSpaces(k) - 2);
+            }
+            printf("\r\n");
+        }
     }
 }
 

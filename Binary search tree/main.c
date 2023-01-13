@@ -6,6 +6,5 @@ int main(int argc, char** argv)
 
     bstInsert(&node, 11, 11);
     showTree(&node, 4);
-    printf("\r\n");
 }
 
