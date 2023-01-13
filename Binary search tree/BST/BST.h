@@ -17,11 +17,12 @@ struct treeNode
 {
     struct treeNode *leftNode;
     struct treeNode *rightNode;
+    struct treeNode *parentNode;
     KEY_TYPE key;
     VALUE_TYPE value;
 };
 
 struct treeNode *bstFind(struct treeNode *node, KEY_TYPE key);
-BinaryTreeStatus bstInsert(struct treeNode *node, KEY_TYPE key, VALUE_TYPE value);
+BinaryTreeStatus bstInsert(struct treeNode *node, KEY_TYPE key, VALUE_TYPE value, struct treeNode *parentNode);
 BinaryTreeStatus bstRemove(struct treeNode *node, KEY_TYPE key);
 BinaryTreeStatus showTree(struct treeNode *node, uint8_t num);
