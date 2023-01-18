@@ -15,9 +15,9 @@ typedef enum {
 
 struct treeNode
 {
-    struct treeNode *leftNode;
-    struct treeNode *rightNode;
-    struct treeNode *parentNode;
+    struct treeNode* leftNode;
+    struct treeNode* rightNode;
+    struct treeNode* parentNode;
     KEY_TYPE key;
     VALUE_TYPE value;
 };

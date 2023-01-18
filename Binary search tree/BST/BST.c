@@ -1,4 +1,6 @@
 #include"BST.h"
+#include <malloc.h>
+#include <stdbool.h>
 
 #define MAX_DIGITS 3
 
@@ -22,9 +24,18 @@ BinaryTreeStatus bstInsert(struct treeNode *node, KEY_TYPE key, VALUE_TYPE value
 {
     node->parentNode = parentNode;
 
-    if(node->parentNode == (KEY_TYPE)NULL)
+    if((node->parentNode == (KEY_TYPE)NULL) && (node->key == NULL))
     {
         node->parentNode = NULL;
+        node->leftNode = NULL;
+        node->rightNode = NULL;
+        node->key = key;
+        node->value = value;
+        return BINARY_TREE_OK;
+    }
+
+    if((node->key == NULL))
+    {
         node->leftNode = NULL;
         node->rightNode = NULL;
         node->key = key;
@@ -40,14 +51,16 @@ BinaryTreeStatus bstInsert(struct treeNode *node, KEY_TYPE key, VALUE_TYPE value
 
     if(node->key < key)
     {
-        struct treeNode rigthNode;
-        node->rightNode = &rigthNode;
+        struct treeNode* rigthNode;
+        rigthNode = malloc(sizeof(struct treeNode));
+        node->rightNode = rigthNode;
         bstInsert(node->rightNode, key, value, node);
         return BINARY_TREE_OK;
     }
     else {
-        struct treeNode leftNode;
-        node->leftNode = &leftNode;
+        struct treeNode* leftNode;
+        leftNode = malloc(sizeof(struct treeNode));
+        node->leftNode = leftNode;
         bstInsert(node->leftNode, key, value, node);
         return BINARY_TREE_OK;
     }
@@ -139,6 +152,9 @@ static void printKey(struct treeNode *node)
         {
             insideNode = *insideNode.parentNode;
             num++;
+            LEFT(MAX_DIGITS);
+            printf("NULL");
+            return;
         }
 
 
@@ -147,6 +163,7 @@ static void printKey(struct treeNode *node)
 
         LEFT(CountNumbers(insideNode.key));
         printf("%d", insideNode.key);
+
     }
 }
 
