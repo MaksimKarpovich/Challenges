@@ -4,7 +4,7 @@
 
 #define MAX_DIGITS 3
 #define MAX_DEPTH 5
-#define MAX_SHOW_NUMBERS 12
+#define MAX_SHOW_NUMBERS 15
 
 #define UP(num) for(uint32_t dd = 0; dd < num; dd++) printf("\033[A")
 #define DOWN(num) for(uint32_t dd = 0; dd < num; dd++) printf("\033[B")
@@ -16,6 +16,13 @@
 #define PGDN() printf("\033[G")
 #define SPACES(num) for(uint32_t dd = 0; dd < num; dd++) printf(" ")
 #define LINES(num) for(uint32_t dd = 0; dd < num; dd++) printf("_")
+
+#define NODE_LEFT()             if((getLeftChild(&internalNode) == NULL))\
+                                break;\
+                                internalNode = *getLeftChild(&internalNode)
+#define NODE_RIGHT()            if((getRightChild(&internalNode) == NULL))\
+                                break;\
+                                internalNode = *getRightChild(&internalNode)
 
 struct treeNode *bstFind(struct treeNode *node, KEY_TYPE key)
 {
@@ -155,47 +162,91 @@ static KEY_TYPE *initShowArray(struct treeNode *node)
     struct treeNode internalNode = *node;
     array = malloc(sizeof(KEY_TYPE) * MAX_SHOW_NUMBERS);
     *array = internalNode.key;
+
     for(int i = 1; i < MAX_SHOW_NUMBERS; i++)
     {
-        bool notEmpty = true;
-        int k = i;
-        do
-        {
-            if(((i % 2) == 1) && (getLeftChild(&internalNode) != NULL))
-            {
-                internalNode = *getLeftChild(&internalNode);
-                k--;
-            } else if(((i % 2) == 0) && (getRightChild(&internalNode) != NULL))
-            {
-                internalNode = *getRightChild(&internalNode);
-                k -= 2;
-            }
-            else
-            {   notEmpty = false;
-                break;
-            }
-            k = k >> 1;
-        } while(k != 0);
 
-        if(notEmpty)
+        switch (i) {
+        case 1:
+            NODE_LEFT();
             *(array + i) = internalNode.key;
-        printf("k = %d\r\n", k);
-        printf("i = %d\r\n", i);
-        if(notEmpty)
-        {
-            k = i;
-            while(k != 0)
-            {
-                if((i % 2) == 1)
-                    k--;
-                if((i % 2) == 0)
-                    k -= 2;
-                if(internalNode.parentNode != NULL)
-                    internalNode = *internalNode.parentNode;
-            }
+            break;
+        case 2:
+            NODE_RIGHT();
+            *(array + i) = internalNode.key;
+            break;
+        case 3:
+            NODE_LEFT();
+            NODE_LEFT();
+            *(array + i) = internalNode.key;
+            break;
+        case 4:
+            NODE_LEFT();
+            NODE_RIGHT();
+            *(array + i) = internalNode.key;
+            break;
+        case 5:
+            NODE_RIGHT();
+            NODE_LEFT();
+            *(array + i) = internalNode.key;
+            break;
+        case 6:
+            NODE_RIGHT();
+            NODE_RIGHT();
+            *(array + i) = internalNode.key;
+            break;
+        case 7:
+            NODE_LEFT();
+            NODE_LEFT();
+            NODE_LEFT();
+            *(array + i) = internalNode.key;
+            break;
+        case 8:
+            NODE_LEFT();
+            NODE_LEFT();
+            NODE_RIGHT();
+            *(array + i) = internalNode.key;
+            break;
+        case 9:
+            NODE_LEFT();
+            NODE_RIGHT();
+            NODE_LEFT();
+            *(array + i) = internalNode.key;
+            break;
+        case 10:
+            NODE_LEFT();
+            NODE_RIGHT();
+            NODE_RIGHT();
+            *(array + i) = internalNode.key;
+            break;
+        case 11:
+            NODE_RIGHT();
+            NODE_LEFT();
+            NODE_LEFT();
+            *(array + i) = internalNode.key;
+            break;
+        case 12:
+            NODE_RIGHT();
+            NODE_LEFT();
+            NODE_RIGHT();
+            *(array + i) = internalNode.key;
+            break;
+        case 13:
+            NODE_RIGHT();
+            NODE_RIGHT();
+            NODE_LEFT();
+            *(array + i) = internalNode.key;
+            break;
+        case 14:
+            NODE_RIGHT();
+            NODE_RIGHT();
+            NODE_RIGHT();
+            *(array + i) = internalNode.key;
+            break;
+        default:
+            break;
         }
-        else internalNode = *node;
-
+        internalNode = *node;
     }
     return array;
 }
@@ -203,18 +254,15 @@ static KEY_TYPE *initShowArray(struct treeNode *node)
 static void printKey(struct treeNode *node)
 {
     static uint16_t num = 0;
-
     KEY_TYPE *array = initShowArray(node);
-
-    for(int i = 0; i < MAX_SHOW_NUMBERS; i++)
-        printf("arr[%d] = %d\r\n", i, *(array + i));
 
 
     for(int i = 0; i < MAX_DIGITS; i++)
         printf("0");
 
-//    LEFT(CountNumbers(insideNode.key));
-//    printf("%d", insideNode.key);
+    LEFT(CountNumbers(*(array+num)));
+    printf("%d", *(array+num));
+    num++;
 
 }
 
