@@ -1,4 +1,5 @@
 #include "BST.h"
+#include "BST_Show.h"
 
 int main(int argc, char** argv)
 {
