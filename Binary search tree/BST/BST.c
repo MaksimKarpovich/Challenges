@@ -3,6 +3,8 @@
 #include <stdbool.h>
 
 #define MAX_DIGITS 3
+#define MAX_DEPTH 5
+#define MAX_SHOW_NUMBERS 12
 
 #define UP(num) for(uint32_t dd = 0; dd < num; dd++) printf("\033[A")
 #define DOWN(num) for(uint32_t dd = 0; dd < num; dd++) printf("\033[B")
@@ -53,14 +55,16 @@ BinaryTreeStatus bstInsert(struct treeNode *node, KEY_TYPE key, VALUE_TYPE value
     {
         struct treeNode* rigthNode;
         rigthNode = malloc(sizeof(struct treeNode));
-        node->rightNode = rigthNode;
+        if(node->rightNode == NULL)
+            node->rightNode = rigthNode;
         bstInsert(node->rightNode, key, value, node);
         return BINARY_TREE_OK;
     }
     else {
         struct treeNode* leftNode;
         leftNode = malloc(sizeof(struct treeNode));
-        node->leftNode = leftNode;
+        if(node->leftNode == NULL)
+            node->leftNode = leftNode;
         bstInsert(node->leftNode, key, value, node);
         return BINARY_TREE_OK;
     }
@@ -124,50 +128,98 @@ static uint32_t numLines(uint32_t line)
     return res;
 }
 
+static struct treeNode *getLeftChild(struct treeNode *node)
+{
+    if(node->leftNode != NULL)
+        return node->leftNode;
+    else return NULL;
+}
+
+static struct treeNode *getRightChild(struct treeNode *node)
+{
+    if(node->rightNode != NULL)
+        return node->rightNode;
+    else return NULL;
+}
+
+static struct treeNode *getParent(struct treeNode *node)
+{
+    if(node->parentNode != NULL)
+        return node->parentNode;
+    else return NULL;
+}
+
+static KEY_TYPE *initShowArray(struct treeNode *node)
+{
+    KEY_TYPE *array;
+    struct treeNode internalNode = *node;
+    array = malloc(sizeof(KEY_TYPE) * MAX_SHOW_NUMBERS);
+    *array = internalNode.key;
+    for(int i = 1; i < MAX_SHOW_NUMBERS; i++)
+    {
+        bool notEmpty = true;
+        int k = i;
+        do
+        {
+            if(((i % 2) == 1) && (getLeftChild(&internalNode) != NULL))
+            {
+                internalNode = *getLeftChild(&internalNode);
+                k--;
+            } else if(((i % 2) == 0) && (getRightChild(&internalNode) != NULL))
+            {
+                internalNode = *getRightChild(&internalNode);
+                k -= 2;
+            }
+            else
+            {   notEmpty = false;
+                break;
+            }
+            k = k >> 1;
+        } while(k != 0);
+
+        if(notEmpty)
+            *(array + i) = internalNode.key;
+        printf("k = %d\r\n", k);
+        printf("i = %d\r\n", i);
+        if(notEmpty)
+        {
+            k = i;
+            while(k != 0)
+            {
+                if((i % 2) == 1)
+                    k--;
+                if((i % 2) == 0)
+                    k -= 2;
+                if(internalNode.parentNode != NULL)
+                    internalNode = *internalNode.parentNode;
+            }
+        }
+        else internalNode = *node;
+
+    }
+    return array;
+}
+
 static void printKey(struct treeNode *node)
 {
     static uint16_t num = 0;
-    static struct treeNode insideNode;
-    if(num == 0)
-    {
-        insideNode = *node;
-        for(int i = 0; i < MAX_DIGITS; i++)
-            printf("0");
 
-        LEFT(CountNumbers(insideNode.key));
-        printf("%d", insideNode.key);
-        num++;
-    } else {
-        if((insideNode.leftNode != NULL) && (num % 2 == 1))
-        {
-            insideNode = *insideNode.leftNode;
-            num++;
-        }
-        else if((insideNode.rightNode != NULL) && (num % 2 == 0))
-        {
-            insideNode = *insideNode.rightNode;
-            num++;
-        }
-        else if((insideNode.parentNode != NULL))
-        {
-            insideNode = *insideNode.parentNode;
-            num++;
-            LEFT(MAX_DIGITS);
-            printf("NULL");
-            return;
-        }
+    KEY_TYPE *array = initShowArray(node);
+
+    for(int i = 0; i < MAX_SHOW_NUMBERS; i++)
+        printf("arr[%d] = %d\r\n", i, *(array + i));
 
 
-        for(int i = 0; i < MAX_DIGITS; i++)
-            printf("0");
+    for(int i = 0; i < MAX_DIGITS; i++)
+        printf("0");
 
-        LEFT(CountNumbers(insideNode.key));
-        printf("%d", insideNode.key);
+//    LEFT(CountNumbers(insideNode.key));
+//    printf("%d", insideNode.key);
 
-    }
 }
 
-BinaryTreeStatus showTree(struct treeNode *node, uint8_t num) // Now good work only with num = [0;4]
+
+BinaryTreeStatus showTree(struct treeNode *node, uint8_t num) // Now good work only with num = [0; 4]
 {
     if(node->key == (KEY_TYPE)NULL)
     {
