@@ -3,10 +3,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include "BST.h"
-
-#define MAX_DIGITS 3
-#define MAX_DEPTH 5
-#define MAX_SHOW_NUMBERS 15
+#include "BST_Show_config.h"
 
 #define NODE_LEFT()             if((getLeftChild(&internalNode) == NULL))\
                                 break;\
@@ -26,6 +23,12 @@
 #define SPACES(num) for(uint32_t dd = 0; dd < num; dd++) printf(" ")
 #define LINES(num) for(uint32_t dd = 0; dd < num; dd++) printf("_")
 
+/**
+  * @brief  Counts the number of digits in a number.
+  *
+  * @param  number original number
+  * @return number of digits in a number
+  */
 static uint8_t CountNumbers(uint8_t number)
 {
     if(number == 0)
@@ -54,7 +57,7 @@ static uint32_t numSpaces(uint32_t line)
         return 0;
 
     uint32_t lines = numLines(line - 1);
-    uint32_t res = (numSpaces(line - 1) + MAX_DIGITS + 1 + lines);
+    uint32_t res = (numSpaces(line - 1) + MAX_SHOW_DIGITS + 1 + lines);
     return res;
 
 }
@@ -63,7 +66,7 @@ static uint32_t numRightSpaces(uint32_t line)
 {
     if(line == 0)
         return 5;
-    uint32_t res =  (2 << (line-1)) * MAX_DIGITS - numLines(line - 1) + 2 * line + 1;
+    uint32_t res =  (2 << (line-1)) * MAX_SHOW_DIGITS - numLines(line - 1) + 2 * line + 1;
     return res;
 }
 
@@ -71,7 +74,7 @@ static uint32_t numLines(uint32_t line)
 {
     uint32_t spaces = numSpaces(line);
 
-    int32_t res = (spaces - MAX_DIGITS - 3);
+    int32_t res = (spaces - MAX_SHOW_DIGITS - 3);
     if(res < 0)
         return 0;
     return res;
@@ -199,7 +202,7 @@ static void printKey(struct treeNode *node)
     KEY_TYPE *array = initShowArray(node);
 
 
-    for(int i = 0; i < MAX_DIGITS; i++)
+    for(int i = 0; i < MAX_SHOW_DIGITS; i++)
         printf("0");
 
     LEFT(CountNumbers(*(array+num)));
@@ -209,23 +212,23 @@ static void printKey(struct treeNode *node)
 }
 
 
-void showTree(struct treeNode *node, uint8_t num) // Now good work only with num = [0; 4]
+BinaryTreeStatus showTree(struct treeNode *node, uint8_t depth) // Now good work only with num = [0; 4]
 {
     if(node->key == (KEY_TYPE)NULL)
     {
         printf("Error: Can not show empty tree\r\n");
-        return;
+        return BINARY_TREE_ERROR;
     }
 
-    if(num == 0)
+    if(depth == 0)
     {
         printf("Error: Can not show 0 three nodes\r\n");
-        return;
+        return BINARY_TREE_ERROR;
     }
 
     uint16_t numRightSpace = 0;
 
-    for(int k = num; k > 0; k--)
+    for(int k = depth; k > 0; k--)
     {
 
         SPACES(numSpaces(k));
@@ -263,7 +266,7 @@ void showTree(struct treeNode *node, uint8_t num) // Now good work only with num
             for(uint16_t i = 0; i < (numRightSpace >> 1) + 1; i++) {
                 printf("/");
 
-                SPACES((numLines(k) * 2) + MAX_DIGITS);
+                SPACES((numLines(k) * 2) + MAX_SHOW_DIGITS);
 
                 printf("\\");
                 SPACES(numRightSpaces(k) - 2);
@@ -271,5 +274,7 @@ void showTree(struct treeNode *node, uint8_t num) // Now good work only with num
             printf("\r\n");
         }
     }
+
+    return BINARY_TREE_OK;
 }
 

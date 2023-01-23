@@ -1,3 +1,5 @@
 #include <stdint.h>
 
-void showTree(struct treeNode *node, uint8_t num);
+#ifndef BST_SHOW
+#define BST_SHOW
+#endif

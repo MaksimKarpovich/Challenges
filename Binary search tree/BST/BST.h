@@ -2,10 +2,13 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdint.h>
+#include "BST_config.h"
 
-#define VALUE_TYPE int32_t
-#define KEY_TYPE int32_t
+#define bstInsert(node, key, value) bstInternalInsert(node, key, value, NULL);
 
+/**
+  * @brief  Describes the module working status
+  */
 typedef enum {
     BINARY_TREE_OK,
     BINARY_TREE_EMPTY,
@@ -13,6 +16,9 @@ typedef enum {
 
 } BinaryTreeStatus;
 
+/**
+  * @brief Structure describing one node
+  */
 struct treeNode
 {
     struct treeNode* leftNode;
@@ -22,6 +28,43 @@ struct treeNode
     VALUE_TYPE value;
 };
 
+/**
+  * @brief  Find node with necessary key.
+  *
+  * @param  node Pointer to starting node (root)
+  * @param  key The key we are looking for
+  * @return Pointer to node with key equal input key
+  */
 struct treeNode *bstFind(struct treeNode *node, KEY_TYPE key);
-BinaryTreeStatus bstInsert(struct treeNode *node, KEY_TYPE key, VALUE_TYPE value, struct treeNode *parentNode);
+
+/**
+  * @brief  Insert node to tree.
+  *
+  * @param  node Pointer to starting node (root)
+  * @param  key Adding key
+  * @param  value Adding value
+  * @param  parentNode Pointer to parent node
+  * @return Result status
+  */
+BinaryTreeStatus bstInternalInsert(struct treeNode *node, KEY_TYPE key, VALUE_TYPE value, struct treeNode *parentNode);
+
+/**
+  * @brief  Remove node from tree.
+  *
+  * @param  node Pointer to starting node (root)
+  * @param  key Removing key
+  * @return Result status
+  */
 BinaryTreeStatus bstRemove(struct treeNode *node, KEY_TYPE key);
+
+#ifdef BST_SHOW
+/**
+  * @brief  Shows the tree to the depth from the node.
+  *
+  * @note   Displays a tree visually on the screen.
+  * @param  node Poiner to starting node (root)
+  * @param  depth display depth
+  * @return Result status
+  */
+BinaryTreeStatus showTree(struct treeNode *node, uint8_t depth);
+#endif

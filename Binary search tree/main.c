@@ -1,15 +1,15 @@
-#include "BST.h"
 #include "BST_Show.h"
+#include "BST.h"
 
 int main(int argc, char** argv)
 {
     struct treeNode node;
 
-    bstInsert(&node, 11, 11, NULL);
-    bstInsert(&node, 7, 7, NULL);
-    bstInsert(&node, 12, 12, NULL);
-    bstInsert(&node, 9, 9, NULL);
-    bstInsert(&node, 4, 4, NULL);
+    bstInsert(&node, 11, 11);
+    bstInsert(&node, 7, 7);
+    bstInsert(&node, 12, 12);
+    bstInsert(&node, 9, 9);
+    bstInsert(&node, 4, 4);
     showTree(&node, 4);
 }
 

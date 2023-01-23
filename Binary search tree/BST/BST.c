@@ -7,7 +7,7 @@ struct treeNode *bstFind(struct treeNode *node, KEY_TYPE key)
 
 }
 
-BinaryTreeStatus bstInsert(struct treeNode *node, KEY_TYPE key, VALUE_TYPE value, struct treeNode *parentNode)
+BinaryTreeStatus bstInternalInsert(struct treeNode *node, KEY_TYPE key, VALUE_TYPE value, struct treeNode *parentNode)
 {
     node->parentNode = parentNode;
 
@@ -42,7 +42,7 @@ BinaryTreeStatus bstInsert(struct treeNode *node, KEY_TYPE key, VALUE_TYPE value
         rigthNode = malloc(sizeof(struct treeNode));
         if(node->rightNode == NULL)
             node->rightNode = rigthNode;
-        bstInsert(node->rightNode, key, value, node);
+        bstInternalInsert(node->rightNode, key, value, node);
         return BINARY_TREE_OK;
     }
     else {
@@ -50,7 +50,7 @@ BinaryTreeStatus bstInsert(struct treeNode *node, KEY_TYPE key, VALUE_TYPE value
         leftNode = malloc(sizeof(struct treeNode));
         if(node->leftNode == NULL)
             node->leftNode = leftNode;
-        bstInsert(node->leftNode, key, value, node);
+        bstInternalInsert(node->leftNode, key, value, node);
         return BINARY_TREE_OK;
     }
 
