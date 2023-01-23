@@ -212,7 +212,7 @@ static void printKey(struct treeNode *node)
 }
 
 
-BinaryTreeStatus showTree(struct treeNode *node, uint8_t depth) // Now good work only with num = [0; 4]
+BinaryTreeStatus showTree(struct treeNode *node, uint8_t depth) // Now good work only with depth = [0; 4]
 {
     if(node->key == (KEY_TYPE)NULL)
     {
@@ -275,6 +275,7 @@ BinaryTreeStatus showTree(struct treeNode *node, uint8_t depth) // Now good work
         }
     }
 
+    PGDN();
     return BINARY_TREE_OK;
 }
 

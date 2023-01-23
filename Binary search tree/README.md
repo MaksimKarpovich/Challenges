@@ -9,6 +9,8 @@ You are given a list of numbers stored in a list, *A*. Your challenge is to buil
 
 - [x] Represent each node of the tree (including its data, left child and right child).
 - [x] Print the tree out in an understandable form.
+- [x] Add value lookup by key.
+- [ ] Make correct node deletion by key.
 - [ ] Make a function to insert a list of numbers (*A*) into the tree.
 - [ ] Check if you can insert all the numbers in *A* into your tree, and that it prints out as expected.
 

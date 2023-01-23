@@ -4,7 +4,17 @@
 
 struct treeNode *bstFind(struct treeNode *node, KEY_TYPE key)
 {
-
+    if(node == NULL)
+    {
+        printf("The binary tree with the selected root does not contain a node with key %d\r\n", key);
+        return NULL;
+    }
+    if(node->key == key)
+        return node;
+    else if(node->key < key)
+        return bstFind(node->rightNode, key);
+    else
+        return bstFind(node->leftNode, key);
 }
 
 BinaryTreeStatus bstInternalInsert(struct treeNode *node, KEY_TYPE key, VALUE_TYPE value, struct treeNode *parentNode)
