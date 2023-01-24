@@ -4,7 +4,8 @@
 #include <stdint.h>
 #include "BST_config.h"
 
-#define bstInsert(node, key, value) bstInternalInsert(node, key, value, NULL);
+#define bstInsert(node, key, value) bstInternalInsert(node, key, value, NULL)
+#define bstRemove(node, key) bstInternalRemove(node, key, NULL, DIRECTION_LEFT)
 
 /**
   * @brief  Describes the module working status
@@ -15,6 +16,14 @@ typedef enum {
     BINARY_TREE_ERROR,
 
 } BinaryTreeStatus;
+
+/**
+  * @brief  Describes the module working status
+  */
+typedef enum {
+    DIRECTION_LEFT,
+    DIRECTION_RIGHT
+} Direction;
 
 /**
   * @brief Structure describing one node
@@ -55,7 +64,7 @@ BinaryTreeStatus bstInternalInsert(struct treeNode *node, KEY_TYPE key, VALUE_TY
   * @param  key Removing key
   * @return Result status
   */
-BinaryTreeStatus bstRemove(struct treeNode *node, KEY_TYPE key);
+BinaryTreeStatus bstInternalRemove(struct treeNode *node, KEY_TYPE key, struct treeNode *parentNode, Direction direction);
 
 #ifdef BST_SHOW
 /**
