@@ -11,8 +11,8 @@ You are given a list of numbers stored in a list, *A*. Your challenge is to buil
 - [x] Print the tree out in an understandable form.
 - [x] Add value lookup by key.
 - [x] Make correct node deletion by key.
-- [ ] Make a function to insert a list of numbers (*A*) into the tree.
-- [ ] Check if you can insert all the numbers in *A* into your tree, and that it prints out as expected.
+- [x] Make a function to insert a list of numbers (*A*) into the tree.
+- [x] Check if you can insert all the numbers in *A* into your tree, and that it prints out as expected.
 
  ### Intermediate difficulty
 
