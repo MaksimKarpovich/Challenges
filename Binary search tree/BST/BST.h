@@ -77,3 +77,7 @@ BinaryTreeStatus bstInternalRemove(struct treeNode *node, KEY_TYPE key, struct t
   */
 BinaryTreeStatus showTree(struct treeNode *node, uint8_t depth);
 #endif
+
+#ifdef BST_FILE
+BinaryTreeStatus addToNode(struct treeNode *node, char *sourceFileName);
+#endif
