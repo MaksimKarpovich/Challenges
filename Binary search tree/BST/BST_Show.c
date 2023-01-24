@@ -196,19 +196,16 @@ static KEY_TYPE *initShowArray(struct treeNode *node)
     return array;
 }
 
-static void printKey(struct treeNode *node)
+static void printKey(struct treeNode *node, uint16_t *number)
 {
-    static uint16_t num = 0;
     KEY_TYPE *array = initShowArray(node);
-
 
     for(int i = 0; i < MAX_SHOW_DIGITS; i++)
         printf("0");
 
-    LEFT(CountNumbers(*(array+num)));
-    printf("%d", *(array+num));
-    num++;
-
+    LEFT(CountNumbers(*(array + *number)));
+    printf("%d", *(array + *number));
+    (*number)++;
 }
 
 
@@ -227,7 +224,7 @@ BinaryTreeStatus showTree(struct treeNode *node, uint8_t depth) // Now good work
     }
 
     uint16_t numRightSpace = 0;
-
+    uint16_t numberKey = 0;
     for(int k = depth; k > 0; k--)
     {
 
@@ -235,7 +232,7 @@ BinaryTreeStatus showTree(struct treeNode *node, uint8_t depth) // Now good work
 
         LINES(numLines(k));
 
-        printKey(node);
+        printKey(node, &numberKey);
 
         LINES(numLines(k));
 
@@ -245,7 +242,7 @@ BinaryTreeStatus showTree(struct treeNode *node, uint8_t depth) // Now good work
 
             LINES(numLines(k));
 
-            printKey(node);
+            printKey(node, &numberKey);
 
             LINES(numLines(k));
 

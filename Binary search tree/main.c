@@ -12,8 +12,8 @@ int main(int argc, char** argv)
     bstInsert(&node, 4, 4);
 
     showTree(&node, 4);
-    const uint8_t keyToRemove = 122;
-//    bstRemove(&node, keyToRemove);
+    const uint8_t keyToRemove = 152;
+    bstRemove(&node, keyToRemove);
     printf("After remooving %d\r\n", keyToRemove);
     showTree(&node, 4);
 
