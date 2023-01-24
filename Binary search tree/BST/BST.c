@@ -112,9 +112,10 @@ BinaryTreeStatus bstInternalRemove(struct treeNode *node, KEY_TYPE key, struct t
         {
             node->key = node->leftNode->key;
             node->value = node->leftNode->value;
+            struct treeNode* leftNodeTemp = node->leftNode;
             node->rightNode = node->leftNode->rightNode;
             node->leftNode = node->leftNode->leftNode;
-            free(node->leftNode);
+            free(leftNodeTemp);
             return BINARY_TREE_OK;
         }
 
@@ -122,9 +123,10 @@ BinaryTreeStatus bstInternalRemove(struct treeNode *node, KEY_TYPE key, struct t
         {
             node->key = node->rightNode->key;
             node->value = node->rightNode->value;
+            struct treeNode* rightNodeTemp = node->rightNode;
             node->rightNode = node->rightNode->rightNode;
             node->leftNode = node->rightNode->leftNode;
-            free(node->rightNode);
+            free(rightNodeTemp);
             return BINARY_TREE_OK;
         }
 
@@ -134,9 +136,9 @@ BinaryTreeStatus bstInternalRemove(struct treeNode *node, KEY_TYPE key, struct t
             {
                 node->key = node->rightNode->key;
                 node->value = node->rightNode->value;
+                struct treeNode* rightNodeTemp = node->rightNode;
                 node->rightNode = node->rightNode->rightNode;
-                node->leftNode = node->rightNode->leftNode;
-                free(node->rightNode);
+                free(rightNodeTemp);
                 return BINARY_TREE_OK;
             } else
             {
