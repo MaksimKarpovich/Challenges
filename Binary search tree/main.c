@@ -13,4 +13,3 @@ int main(int argc, char** argv)
 
     showTree(&node, NUM_SHOWING_NODES);
 }
-
