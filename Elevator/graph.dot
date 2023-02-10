@@ -1,0 +1,11 @@
+digraph G {
+
+  {rank=same "move up" staying "move down"}
+
+  staying -> "move up"[label = "call to level > current"];
+  staying -> "move down"[label = "call to level < current"];
+  "move down" -> staying[label = "call to level == current"];
+  "move up" -> staying[label = "call to level == current"];
+
+  staying [shape=Mdiamond];
+}
