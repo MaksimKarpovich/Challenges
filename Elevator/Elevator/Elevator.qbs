@@ -13,6 +13,8 @@ QtApplication {
         "main.cpp",
         "widget.cpp",
         "widget.h",
+        "elevator.cpp",
+        "elevator.h",
         "widget.ui",
     ]
 

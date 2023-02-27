@@ -18,7 +18,6 @@ public:
     Widget(QWidget *parent = nullptr);
     ~Widget();
 
-private:
     Ui::Widget *ui;
 };
 #endif // WIDGET_H
