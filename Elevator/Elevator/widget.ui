@@ -72,7 +72,7 @@
   <widget class="QPushButton" name="Elevator">
    <property name="geometry">
     <rect>
-     <x>340</x>
+     <x>390</x>
      <y>380</y>
      <width>81</width>
      <height>101</height>
@@ -80,6 +80,32 @@
    </property>
    <property name="text">
     <string>Elevator</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="leftDoor">
+   <property name="geometry">
+    <rect>
+     <x>390</x>
+     <y>380</y>
+     <width>41</width>
+     <height>101</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="rightDoor">
+   <property name="geometry">
+    <rect>
+     <x>430</x>
+     <y>380</y>
+     <width>41</width>
+     <height>101</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
    </property>
   </widget>
  </widget>

@@ -17,8 +17,15 @@ class Elevator : public Widget
     Q_OBJECT
 
 public:
-    Elevator(QPushButton *Elevator);
+    Elevator(QPushButton *Elevator, QPushButton *LeftDoor, QPushButton *RightDoor);
     ~Elevator();
 
+    void moveUp();
+    void moveDown();
+
+private:
+    QPushButton *elevator;
+    QPushButton *leftDoor;
+    QPushButton *rightDoor;
 };
 #endif // ELEVATOR_H
