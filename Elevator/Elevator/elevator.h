@@ -22,6 +22,8 @@ public:
 
     void moveUp();
     void moveDown();
+    void openDoor();
+    void closeDoor();
 
 private:
     QPushButton *elevator;

@@ -10,6 +10,6 @@ int main(int argc, char *argv[])
     Widget w;
     w.show();
     Elevator First =  Elevator(w.ui->Elevator, w.ui->leftDoor, w.ui->rightDoor);
-    First.moveDown();
+    First.openDoor();
     return a.exec();
 }

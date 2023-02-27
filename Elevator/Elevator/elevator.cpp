@@ -82,3 +82,51 @@ void Elevator::moveDown()
         animationRightDoor->start();
     }
 }
+
+void Elevator::openDoor()
+{
+    int xLeftDoor, yLeftDoor, wLeftDoor, hLeftDoor;
+    leftDoor->geometry().getRect(&xLeftDoor, &yLeftDoor, &wLeftDoor, &hLeftDoor);
+    int xRightDoor, yRightDoor, wRightDoor, hRightDoor;
+    rightDoor->geometry().getRect(&xRightDoor, &yRightDoor, &wRightDoor, &hRightDoor);
+
+    if((xRightDoor - xLeftDoor) < (wLeftDoor + wRightDoor))
+    {
+        QPropertyAnimation *animationLeftDoor = new QPropertyAnimation(leftDoor, "geometry");
+        animationLeftDoor->setDuration(MOVE_DURATION);
+        animationLeftDoor->setStartValue(leftDoor->geometry());
+        animationLeftDoor->setEndValue(QRect(xLeftDoor - wLeftDoor + 1, yLeftDoor, wLeftDoor, hLeftDoor));
+
+        QPropertyAnimation *animationRightDoor = new QPropertyAnimation(rightDoor, "geometry");
+        animationRightDoor->setDuration(MOVE_DURATION);
+        animationRightDoor->setStartValue(rightDoor->geometry());
+        animationRightDoor->setEndValue(QRect(xRightDoor + wRightDoor - 1, yRightDoor, wRightDoor, hRightDoor));
+
+        animationLeftDoor->start();
+        animationRightDoor->start();
+    }
+}
+
+void Elevator::closeDoor()
+{
+    int xLeftDoor, yLeftDoor, wLeftDoor, hLeftDoor;
+    leftDoor->geometry().getRect(&xLeftDoor, &yLeftDoor, &wLeftDoor, &hLeftDoor);
+    int xRightDoor, yRightDoor, wRightDoor, hRightDoor;
+    rightDoor->geometry().getRect(&xRightDoor, &yRightDoor, &wRightDoor, &hRightDoor);
+
+    if((xRightDoor - xLeftDoor) > (wLeftDoor + wRightDoor))
+    {
+        QPropertyAnimation *animationLeftDoor = new QPropertyAnimation(leftDoor, "geometry");
+        animationLeftDoor->setDuration(MOVE_DURATION);
+        animationLeftDoor->setStartValue(leftDoor->geometry());
+        animationLeftDoor->setEndValue(QRect(xLeftDoor + wLeftDoor - 1, yLeftDoor, wLeftDoor, hLeftDoor));
+
+        QPropertyAnimation *animationRightDoor = new QPropertyAnimation(rightDoor, "geometry");
+        animationRightDoor->setDuration(MOVE_DURATION);
+        animationRightDoor->setStartValue(rightDoor->geometry());
+        animationRightDoor->setEndValue(QRect(xRightDoor - wRightDoor + 1, yRightDoor, wRightDoor, hRightDoor));
+
+        animationLeftDoor->start();
+        animationRightDoor->start();
+    }
+}
