@@ -6,7 +6,7 @@
 #define FLOOR_HIGH 100
 #define FLOORS_NUM 3
 #define LOWEST_POINT 380
-#define HIGHEST_POINT (LOWEST_POINT + FLOORS_NUM * FLOOR_HIGH)
+#define HIGHEST_POINT (LOWEST_POINT - FLOORS_NUM * FLOOR_HIGH + FLOOR_HIGH)
 
 Elevator::Elevator(QPushButton *Elevator, QPushButton *LeftDoor, QPushButton *RightDoor)
 {
@@ -24,12 +24,11 @@ void Elevator::moveUp()
 {
     int xElevator, yElevator, wElevator, hElevator;
     elevator->geometry().getRect(&xElevator, &yElevator, &wElevator, &hElevator);
-    if(yElevator < HIGHEST_POINT)
+    if(yElevator > HIGHEST_POINT)
     {
         QPropertyAnimation *animationElevator = new QPropertyAnimation(elevator, "geometry");
         animationElevator->setDuration(MOVE_DURATION);
         animationElevator->setStartValue(elevator->geometry());
-        qDebug() << yElevator;
         animationElevator->setEndValue(QRect(xElevator, yElevator - FLOOR_HIGH, wElevator, hElevator));
 
         int xLeftDoor, yLeftDoor, wLeftDoor, hLeftDoor;
@@ -56,8 +55,9 @@ void Elevator::moveDown()
 {
     int xElevator, yElevator, wElevator, hElevator;
     elevator->geometry().getRect(&xElevator, &yElevator, &wElevator, &hElevator);
-    if(yElevator > LOWEST_POINT)
+    if(yElevator < LOWEST_POINT)
     {
+        qDebug() << yElevator << "<" << LOWEST_POINT;
         QPropertyAnimation *animationElevator = new QPropertyAnimation(elevator, "geometry");
         animationElevator->setDuration(MOVE_DURATION);
         animationElevator->setStartValue(elevator->geometry());
@@ -129,4 +129,11 @@ void Elevator::closeDoor()
         animationLeftDoor->start();
         animationRightDoor->start();
     }
+}
+
+uint8_t Elevator::getCurrentFloor()
+{
+    int xElevator, yElevator, wElevator, hElevator;
+    elevator->geometry().getRect(&xElevator, &yElevator, &wElevator, &hElevator);
+    return (LOWEST_POINT - yElevator + FLOOR_HIGH) / FLOOR_HIGH;
 }

@@ -24,6 +24,7 @@ public:
     void moveDown();
     void openDoor();
     void closeDoor();
+    uint8_t getCurrentFloor();
 
 private:
     QPushButton *elevator;

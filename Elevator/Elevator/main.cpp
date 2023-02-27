@@ -10,6 +10,13 @@ int main(int argc, char *argv[])
     Widget w;
     w.show();
     Elevator First =  Elevator(w.ui->Elevator, w.ui->leftDoor, w.ui->rightDoor);
-    First.openDoor();
+    qDebug() << First.getCurrentFloor();
+    First.moveUp();
+    while(First.getCurrentFloor() == 1)
+        QCoreApplication::processEvents();
+
+    qDebug() << First.getCurrentFloor();
+    First.moveDown();
+
     return a.exec();
 }
