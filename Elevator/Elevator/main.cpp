@@ -12,11 +12,12 @@ int main(int argc, char *argv[])
     Elevator First =  Elevator(w.ui->Elevator, w.ui->leftDoor, w.ui->rightDoor);
     qDebug() << First.getCurrentFloor();
     First.moveUp();
-    while(First.getCurrentFloor() == 1)
-        QCoreApplication::processEvents();
-
-    qDebug() << First.getCurrentFloor();
+    First.moveUp();
+    First.openDoor();
+    First.closeDoor();
     First.moveDown();
+    First.openDoor();
+    First.closeDoor();
 
     return a.exec();
 }

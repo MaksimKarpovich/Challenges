@@ -48,6 +48,12 @@ void Elevator::moveUp()
         animationElevator->start();
         animationLeftDoor->start();
         animationRightDoor->start();
+        while (animationLeftDoor->state() == QAbstractAnimation::Running)
+            QCoreApplication::processEvents();;
+        while (animationRightDoor->state() == QAbstractAnimation::Running)
+            QCoreApplication::processEvents();;
+        while (animationElevator->state() == QAbstractAnimation::Running)
+            QCoreApplication::processEvents();;
     }
 }
 
@@ -80,6 +86,12 @@ void Elevator::moveDown()
         animationElevator->start();
         animationLeftDoor->start();
         animationRightDoor->start();
+        while (animationLeftDoor->state() == QAbstractAnimation::Running)
+            QCoreApplication::processEvents();;
+        while (animationRightDoor->state() == QAbstractAnimation::Running)
+            QCoreApplication::processEvents();;
+        while (animationElevator->state() == QAbstractAnimation::Running)
+            QCoreApplication::processEvents();;
     }
 }
 
@@ -104,6 +116,10 @@ void Elevator::openDoor()
 
         animationLeftDoor->start();
         animationRightDoor->start();
+        while (animationLeftDoor->state() == QAbstractAnimation::Running)
+            QCoreApplication::processEvents();;
+        while (animationRightDoor->state() == QAbstractAnimation::Running)
+            QCoreApplication::processEvents();;
     }
 }
 
@@ -128,6 +144,10 @@ void Elevator::closeDoor()
 
         animationLeftDoor->start();
         animationRightDoor->start();
+        while (animationLeftDoor->state() == QAbstractAnimation::Running)
+            QCoreApplication::processEvents();;
+        while (animationRightDoor->state() == QAbstractAnimation::Running)
+            QCoreApplication::processEvents();;
     }
 }
 
