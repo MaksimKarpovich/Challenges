@@ -11,6 +11,17 @@ int main(int argc, char *argv[])
     w.show();
     Elevator First =  Elevator(w.ui->Elevator, w.ui->leftDoor, w.ui->rightDoor);
     qDebug() << First.getCurrentFloor();
+    First.moveDown();
+    First.moveDown();
+    First.moveUp();
+    First.moveUp();
+    First.moveUp();
+    First.moveUp();
+    First.moveUp();
+    First.moveUp();
+    First.moveUp();
+    First.moveUp();
+    First.moveUp();
     First.moveUp();
     First.moveUp();
     First.openDoor();
@@ -18,6 +29,8 @@ int main(int argc, char *argv[])
     First.moveDown();
     First.openDoor();
     First.closeDoor();
+    First.moveDown();
+    First.moveDown();
 
     return a.exec();
 }
